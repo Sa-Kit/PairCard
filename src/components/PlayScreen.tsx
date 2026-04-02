@@ -36,12 +36,11 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
   const [turns, setTurns] = useState(0);
 
   const [startTime, setStartTime] = useState<number>(0);
-  const [endTime, setEndTime] = useState<number>(0);
 
   // 初期化
   useEffect(() => {
     const initCards = () => {
-      const selectedImages = getRandomCards(4);
+      const selectedImages = getRandomCards(2); //カード枚数
 
       const duplicated = [...selectedImages, ...selectedImages];
 
@@ -66,9 +65,8 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
   useEffect(() => {
     if (cards.length > 0 && cards.every((c) => c.isMatched)) {
       const end = Date.now();
-      setEndTime(end);
 
-      const timeSec = Math.floor((endTime - startTime) / 1000);
+      const timeSec = Math.floor((end - startTime) / 1000);
 
       const score = 1000 - turns * 10 - timeSec * 2; //スコア計算
       setTimeout(() => {
