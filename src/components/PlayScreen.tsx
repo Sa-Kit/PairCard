@@ -56,7 +56,7 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
       const end = Date.now();
       setEndTime(end);
 
-      const timeSec = Math.floor((end - startTime) / 1000);
+      const timeSec = Math.floor((endTime - startTime) / 1000);
 
       const score = 1000 - turns * 10 - timeSec * 2; //スコア計算
       setTimeout(() => {
@@ -111,9 +111,7 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-400 to-blue-700 flex flex-col items-center justify-center">
-      <p className="text-white text-2xl mb-2">
-        同じ絵柄のカードをそろえよう！
-      </p>
+      <p className="text-white text-2xl mb-2">同じ絵柄のカードをそろえよう！</p>
 
       {/* ターン数表示 */}
       <p className="text-white mb-4">ターン数: {turns}</p>
