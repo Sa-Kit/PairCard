@@ -40,7 +40,7 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
   // 初期化
   useEffect(() => {
     const initCards = () => {
-      const selectedImages = getRandomCards(2); //カード枚数
+      const selectedImages = getRandomCards(4); //カード枚数
 
       const duplicated = [...selectedImages, ...selectedImages];
 
@@ -58,6 +58,7 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
       setStartTime(Date.now()); //時間計測開始
     };
 
+  
     initCards();
   }, []);
 
