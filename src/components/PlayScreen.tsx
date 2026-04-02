@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 import cardBack from "../assets/cards/bg.png";
+const allCards = import.meta.glob("../assets/cards/*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const cardList = Object.values(allCards);
+
+const getRandomCards = (count: number) => {
+  const shuffled = [...cardList].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
 
 type PlayScreenProps = {
   onFinish: (result: ResultData) => void;
@@ -7,7 +18,7 @@ type PlayScreenProps = {
 
 type Card = {
   id: number;
-  value: number;
+  src: string;
   isFlipped: boolean;
   isMatched: boolean;
 };
@@ -30,14 +41,15 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
   // 初期化
   useEffect(() => {
     const initCards = () => {
-      const values = [1, 5, 7, 14]; //カード配列
-      const duplicated = [...values, ...values];
+      const selectedImages = getRandomCards(4);
+
+      const duplicated = [...selectedImages, ...selectedImages];
 
       const shuffled = duplicated
         .sort(() => Math.random() - 0.5)
-        .map((value, index) => ({
+        .map((src, index) => ({
           id: index,
-          value,
+          src,
           isFlipped: false,
           isMatched: false,
         }));
@@ -93,9 +105,9 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
   const checkMatch = (selectedCards: Card[]) => {
     const [a, b] = selectedCards;
 
-    if (a.value === b.value) {
+    if (a.src === b.src) {
       setCards((prev) =>
-        prev.map((c) => (c.value === a.value ? { ...c, isMatched: true } : c)),
+        prev.map((c) => (c.src === a.src ? { ...c, isMatched: true } : c)),
       );
     } else {
       setCards((prev) =>
@@ -126,7 +138,7 @@ const PlayScreen = ({ onFinish }: PlayScreenProps) => {
           >
             {card.isFlipped || card.isMatched ? (
               <img
-                src={`/src/assets/cards/${card.value}.png`}
+                src={card.src}
                 className="w-auto h-auto object-cover rounded"
               />
             ) : (
