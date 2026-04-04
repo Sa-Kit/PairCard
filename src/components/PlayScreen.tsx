@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import cardBack from "../assets/cards/bg.png";
+import cardBack from "../assets/bgCard/bg.png";
 const allCards = import.meta.glob("../assets/cards/*.png", {
   eager: true,
   import: "default",
